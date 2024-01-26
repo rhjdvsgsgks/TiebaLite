@@ -129,7 +129,7 @@ val Configuration.isLandscape: Boolean
     get() = orientation == Configuration.ORIENTATION_LANDSCAPE
 
 val Configuration.isTablet: Boolean
-    = false
+    get() = false
 
 val Context.isTablet: Boolean
     get() = resources.configuration.isTablet

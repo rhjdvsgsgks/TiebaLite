@@ -54,14 +54,6 @@ import com.huanchengfly.tieba.post.utils.appPreferences
 import com.huanchengfly.tieba.post.utils.applicationMetaData
 import com.huanchengfly.tieba.post.utils.launchUrl
 import com.huanchengfly.tieba.post.utils.packageInfo
-import com.microsoft.appcenter.AppCenter
-import com.microsoft.appcenter.analytics.Analytics
-import com.microsoft.appcenter.crashes.Crashes
-import com.microsoft.appcenter.distribute.Distribute
-import com.microsoft.appcenter.distribute.DistributeListener
-import com.microsoft.appcenter.distribute.ReleaseDetails
-import com.microsoft.appcenter.distribute.UpdateAction
-import com.microsoft.appcenter.distribute.UpdateTrack
 import dagger.hilt.android.HiltAndroidApp
 import net.swiftzer.semver.SemVer
 import org.litepal.LitePal
@@ -128,15 +120,6 @@ class App : Application(), IApp, SketchFactory {
         LitePal.initialize(this)
         AccountUtil.init(this)
         Config.init(this)
-        val isSelfBuild = applicationMetaData.getBoolean("is_self_build")
-        if (!isSelfBuild) {
-            Distribute.setUpdateTrack(if (appPreferences.checkCIUpdate) UpdateTrack.PRIVATE else UpdateTrack.PUBLIC)
-            Distribute.setListener(MyDistributeListener())
-            AppCenter.start(
-                this, "b56debcc-264b-4368-a2cd-8c20213f6433",
-                Analytics::class.java, Crashes::class.java, Distribute::class.java
-            )
-        }
         setIcon()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         ThemeUtils.init(ThemeDelegate)

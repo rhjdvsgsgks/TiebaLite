@@ -227,39 +227,6 @@ class App : Application(), IApp, SketchFactory {
         var DENSITY = 0f
     }
 
-    class MyDistributeListener : DistributeListener {
-        override fun onReleaseAvailable(
-            activity: Activity,
-            releaseDetails: ReleaseDetails
-        ): Boolean {
-            val versionName = releaseDetails.shortVersion
-            val newSemVer = SemVer.parse(versionName)
-            val currentSemVer = SemVer.parse(BuildConfig.VERSION_NAME)
-            if (newSemVer <= currentSemVer) {
-                return true
-            }
-            val releaseNotes = releaseDetails.releaseNotes
-            if (activity is BaseActivity) {
-                activity.showDialog {
-                    setTitle(activity.getString(R.string.title_dialog_update, versionName))
-                    setMessage(releaseNotes)
-                    setCancelable(!releaseDetails.isMandatoryUpdate)
-                    setPositiveButton(R.string.appcenter_distribute_update_dialog_download) { _, _ ->
-                        Distribute.notifyUpdateAction(UpdateAction.UPDATE)
-                    }
-                    if (!releaseDetails.isMandatoryUpdate) {
-                        setNeutralButton(R.string.appcenter_distribute_update_dialog_postpone) { _, _ ->
-                            Distribute.notifyUpdateAction(UpdateAction.POSTPONE)
-                        }
-                        setNegativeButton(R.string.button_next_time, null)
-                    }
-                }
-            }
-            return true
-        }
-
-        override fun onNoReleaseAvailable(activity: Activity) {}
-    }
 
     companion object {
         const val TAG = "App"

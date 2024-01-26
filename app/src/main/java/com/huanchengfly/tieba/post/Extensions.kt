@@ -129,7 +129,7 @@ val Configuration.isLandscape: Boolean
     get() = orientation == Configuration.ORIENTATION_LANDSCAPE
 
 val Configuration.isTablet: Boolean
-    get() = (screenLayout and SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE
+    = false
 
 val Context.isTablet: Boolean
     get() = resources.configuration.isTablet

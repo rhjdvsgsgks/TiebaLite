@@ -235,7 +235,7 @@ fun Card(
 }
 
 @Composable
-private fun Badge(
+fun Badge(
     icon: ImageVector,
     text: String,
     modifier: Modifier = Modifier,
@@ -270,6 +270,8 @@ fun ThreadContent(
     showTitle: Boolean = true,
     showAbstract: Boolean = true,
     isGood: Boolean = false,
+    maxLines: Int = 5,
+    highlightKeywords: ImmutableList<String> = persistentListOf(),
 ) {
     val content = buildAnnotatedString {
         if (showTitle) {
@@ -297,7 +299,7 @@ fun ThreadContent(
         }
     }
 
-    EmoticonText(
+    HighlightText(
         text = content,
         modifier = Modifier
             .fillMaxWidth()
@@ -305,8 +307,9 @@ fun ThreadContent(
         fontSize = 15.sp,
         lineSpacing = 0.8.sp,
         overflow = TextOverflow.Ellipsis,
-        maxLines = 5,
+        maxLines = maxLines,
         style = MaterialTheme.typography.body1,
+        highlightKeywords = highlightKeywords
     )
 }
 

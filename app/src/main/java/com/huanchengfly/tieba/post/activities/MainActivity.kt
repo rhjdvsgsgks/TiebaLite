@@ -32,7 +32,6 @@ import com.huanchengfly.tieba.post.interfaces.Refreshable
 import com.huanchengfly.tieba.post.services.NotifyJobService
 import com.huanchengfly.tieba.post.ui.widgets.MyViewPager
 import com.huanchengfly.tieba.post.utils.*
-import com.microsoft.appcenter.crashes.Crashes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -177,31 +176,6 @@ open class MainActivity : BaseActivity(), NavigationBarView.OnItemSelectedListen
             ClientUtils.setActiveTimestamp()
         }
         mViewPager.post {
-            Crashes.hasCrashedInLastSession()
-                .thenAccept { hasCrashed ->
-                    if (hasCrashed) {
-                        Crashes.getLastSessionCrashReport().thenAccept {
-                            val device = it.device
-                            showDialog {
-                                setTitle(R.string.title_dialog_copy_crash_report)
-                                setMessage(R.string.message_dialog_crash)
-                                setPositiveButton(R.string.button_copy_crash) { _, _ ->
-                                    TiebaUtil.copyText(
-                                        this@MainActivity, """
-                                        App 版本：${device.appVersion}
-                                        系统版本：${device.osVersion}
-                                        机型：${device.oemName} ${device.model}
-                                        
-                                        崩溃：
-                                        ${it.stackTrace}
-                                    """.trimIndent()
-                                    )
-                                }
-                                setNegativeButton(R.string.button_cancel, null)
-                            }
-                        }
-                    }
-                }
             if (!SharedPreferencesUtil.get(SharedPreferencesUtil.SP_APP_DATA)
                     .getBoolean("notice_dialog", false)
             ) {

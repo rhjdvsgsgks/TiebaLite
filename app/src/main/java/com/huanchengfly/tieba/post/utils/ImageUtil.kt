@@ -574,11 +574,7 @@ object ImageUtil {
                     )
                 )
             }
-        if (isNightMode()) {
-            changeBrightness(imageView, -35)
-        } else {
             imageView.clearColorFilter()
-        }
         when (type) {
             LOAD_TYPE_SMALL_PIC -> requestBuilder.apply(
                 RequestOptions.bitmapTransform(RadiusTransformation(radius))

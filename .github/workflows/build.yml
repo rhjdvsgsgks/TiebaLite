@@ -1,6 +1,7 @@
 name: Build, Deploy
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "master", "4.0-dev" ]
   pull_request:
@@ -41,10 +42,3 @@ jobs:
         with:
           name: ${{ env.output_file }}
           path: ${{ github.workspace }}/app/build/outputs/apk/debug/${{ env.output_file }}
-
-      - name: Upload Mapping
-        if: ${{ success() }}
-        uses: actions/upload-artifact@v3.1.2
-        with:
-          name: mapping
-          path: ${{ github.workspace }}/app/build/outputs/mapping/debug

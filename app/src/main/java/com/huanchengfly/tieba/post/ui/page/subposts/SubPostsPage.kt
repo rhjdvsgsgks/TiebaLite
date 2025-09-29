@@ -384,12 +384,12 @@ internal fun SubPostsContent(
                                         val forumName = forum?.get { name }
                                         if (fid != 0L) {
 						goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
-                                threadId,
-                                fid,
+                                threadId.toString(),
+                                fid.toString(),
                                 forumName,
                                 anti?.get { tbs },
 				account.name
-                            ).setPn(currentPage).toString()) }
+                            ).setPn(currentPage.toString()).toString()) }
                                             /*showReplyDialog(
                                                 ReplyArgs(
                                                     forumId = fid,
@@ -468,15 +468,15 @@ internal fun SubPostsContent(
                                         val fid = forum?.get { id } ?: forumId
                                         if (fid != 0L) {
 				goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
-                                threadId,
-                                fid,
+                                threadId.toString(),
+                                fid.toString(),
                                 forum?.get { name } ?: "",
                                 anti?.get { tbs },
-				post?.get { id } ?: postId,
-				post!!.get { floor },
+				(post?.get { id } ?: postId).toString(),
+				post!!.get { floor }.toString(),
                                 it.author?.nameShow.takeIf { name -> !name.isNullOrEmpty() } ?: it.author?.name,
-				account.name
-                            ).setPn(currentPage).toString()) }
+				account?.name
+                            ).setPn(currentPage.toString()).toString()) }
                                             /* showReplyDialog(
                                                 ReplyArgs(
                                                     forumId = fid,
@@ -547,16 +547,16 @@ internal fun SubPostsContent(
                                 val fid = forum?.get { id } ?: forumId
                                 if (fid != 0L) {
 				goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
-                                threadId,
-                                fid,
+                                threadId.toString(),
+                                fid.toString(),
                                 forum?.get { name } ?: "",
                                 anti?.get { tbs },
-				post?.get { id } ?: postId,
-				it.id,
-				post!!.get { floor },
+				(post?.get { id } ?: postId).toString(),
+				it.id.toString(),
+				post!!.get { floor }.toString(),
                                 it.author?.nameShow.takeIf { name -> !name.isNullOrEmpty() } ?: it.author?.name,
-				account.name
-                            ).setPn(currentPage).toString()) }
+				account?.name
+                            ).setPn(currentPage.toString()).toString()) }
                                     /* showReplyDialog(
                                         ReplyArgs(
                                             forumId = fid,

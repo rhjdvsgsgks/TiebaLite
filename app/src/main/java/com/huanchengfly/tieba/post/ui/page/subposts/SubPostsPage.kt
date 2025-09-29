@@ -91,6 +91,10 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+import com.huanchengfly.tieba.post.models.ReplyInfoBean
+import com.huanchengfly.tieba.post.activities.ReplyActivity
+import com.huanchengfly.tieba.post.goToActivity
+
 @Destination
 @Composable
 fun SubPostsPage(
@@ -336,14 +340,21 @@ internal fun SubPostsContent(
                                         val fid = forum?.get { id } ?: forumId
                                         val forumName = forum?.get { name }
                                         if (!forumName.isNullOrEmpty()) {
-                                            navigator.navigate(
+						goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
+                                threadId,
+                                fid,
+                                forumName,
+                                anti?.get { tbs },
+				account.name
+                            ).setPn(currentPage).toString()) }
+                                            /*navigator.navigate(
                                                 ReplyPageDestination(
                                                     forumId = fid,
                                                     forumName = forumName,
                                                     threadId = threadId,
                                                     postId = postId,
                                                 )
-                                            )
+                                            )*/
                                         }
                                     }
                                     .padding(8.dp),
@@ -411,7 +422,17 @@ internal fun SubPostsContent(
                                         )
                                     },
                                     onReplyClick = {
-                                        navigator.navigate(
+				goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
+                                threadId,
+                                forumId,
+                                forum?.get { name } ?: "",
+                                anti?.get { tbs },
+				postId,
+				post!!.get { floor },
+                                it.author?.nameShow.takeIf { name -> !name.isNullOrEmpty() } ?: it.author?.name,
+				account.name
+                            ).setPn(currentPage).toString()) }
+                                        /*navigator.navigate(
                                             ReplyPageDestination(
                                                 forumId = forumId,
                                                 forumName = forum?.get { name } ?: "",
@@ -422,7 +443,7 @@ internal fun SubPostsContent(
                                                     ?: it.author?.name,
                                                 replyUserPortrait = it.author?.portrait,
                                             )
-                                        )
+                                        )*/
                                     },
                                     onMenuCopyClick = {
                                         navigator.navigate(
@@ -477,7 +498,18 @@ internal fun SubPostsContent(
                                 )
                             },
                             onReplyClick = {
-                                navigator.navigate(
+				goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
+                                threadId,
+                                forumId,
+                                forum?.get { name } ?: "",
+                                anti?.get { tbs },
+				postId,
+				it.id,
+				post!!.get { floor },
+                                it.author?.nameShow.takeIf { name -> !name.isNullOrEmpty() } ?: it.author?.name,
+				account.name
+                            ).setPn(currentPage).toString()) }
+                                /*navigator.navigate(
                                     ReplyPageDestination(
                                         forumId = forumId,
                                         forumName = forum?.get { name } ?: "",
@@ -489,7 +521,7 @@ internal fun SubPostsContent(
                                             ?: it.author?.name,
                                         replyUserPortrait = it.author?.portrait,
                                     )
-                                )
+                                )*/
                             },
                             onMenuCopyClick = {
                                 navigator.navigate(

@@ -341,12 +341,12 @@ internal fun SubPostsContent(
                                         val forumName = forum?.get { name }
                                         if (!forumName.isNullOrEmpty()) {
 						goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
-                                threadId,
-                                fid,
+                                threadId.toString(),
+                                fid.toString(),
                                 forumName,
                                 anti?.get { tbs },
 				account.name
-                            ).setPn(currentPage).toString()) }
+                            ).setPn(currentPage.toString()).toString()) }
                                             /*navigator.navigate(
                                                 ReplyPageDestination(
                                                     forumId = fid,
@@ -423,15 +423,15 @@ internal fun SubPostsContent(
                                     },
                                     onReplyClick = {
 				goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
-                                threadId,
-                                forumId,
+                                threadId.toString(),
+                                forumId.toString(),
                                 forum?.get { name } ?: "",
                                 anti?.get { tbs },
-				postId,
-				post!!.get { floor },
+				postId.toString(),
+				post!!.get { floor }.toString(),
                                 it.author?.nameShow.takeIf { name -> !name.isNullOrEmpty() } ?: it.author?.name,
-				account.name
-                            ).setPn(currentPage).toString()) }
+				account?.name
+                            ).setPn(currentPage.toString()).toString()) }
                                         /*navigator.navigate(
                                             ReplyPageDestination(
                                                 forumId = forumId,
@@ -499,16 +499,16 @@ internal fun SubPostsContent(
                             },
                             onReplyClick = {
 				goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
-                                threadId,
-                                forumId,
+                                threadId.toString(),
+                                forumId.toString(),
                                 forum?.get { name } ?: "",
                                 anti?.get { tbs },
-				postId,
-				it.id,
-				post!!.get { floor },
+				postId.toString(),
+				it.id.toString(),
+				post!!.get { floor }.toString(),
                                 it.author?.nameShow.takeIf { name -> !name.isNullOrEmpty() } ?: it.author?.name,
-				account.name
-                            ).setPn(currentPage).toString()) }
+				account?.name
+                            ).setPn(currentPage.toString()).toString()) }
                                 /*navigator.navigate(
                                     ReplyPageDestination(
                                         forumId = forumId,

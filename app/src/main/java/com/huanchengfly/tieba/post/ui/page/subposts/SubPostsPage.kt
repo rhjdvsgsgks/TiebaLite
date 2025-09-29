@@ -92,6 +92,10 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+import com.huanchengfly.tieba.post.models.ReplyInfoBean
+import com.huanchengfly.tieba.post.activities.ReplyActivity
+import com.huanchengfly.tieba.post.goToActivity
+
 @Destination
 @Composable
 fun SubPostsPage(
@@ -379,14 +383,21 @@ internal fun SubPostsContent(
                                         val fid = forum?.get { id } ?: forumId
                                         val forumName = forum?.get { name }
                                         if (fid != 0L) {
-                                            showReplyDialog(
+						goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
+                                threadId,
+                                fid,
+                                forumName,
+                                anti?.get { tbs },
+				account.name
+                            ).setPn(currentPage).toString()) }
+                                            /*showReplyDialog(
                                                 ReplyArgs(
                                                     forumId = fid,
                                                     forumName = forumName.toString(),
                                                     threadId = threadId,
                                                     postId = post?.get { id } ?: postId,
                                                 )
-                                            )
+                                            )*/
                                         }
                                     })
                                     .padding(8.dp),
@@ -456,7 +467,17 @@ internal fun SubPostsContent(
                                     onReplyClick = {
                                         val fid = forum?.get { id } ?: forumId
                                         if (fid != 0L) {
-                                            showReplyDialog(
+				goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
+                                threadId,
+                                fid,
+                                forum?.get { name } ?: "",
+                                anti?.get { tbs },
+				post?.get { id } ?: postId,
+				post!!.get { floor },
+                                it.author?.nameShow.takeIf { name -> !name.isNullOrEmpty() } ?: it.author?.name,
+				account.name
+                            ).setPn(currentPage).toString()) }
+                                            /* showReplyDialog(
                                                 ReplyArgs(
                                                     forumId = fid,
                                                     forumName = forum?.get { name } ?: "",
@@ -467,7 +488,7 @@ internal fun SubPostsContent(
                                                         ?: it.author?.name,
                                                     replyUserPortrait = it.author?.portrait,
                                                 )
-                                            )
+                                            ) */
                                         }
                                     },
                                     onMenuCopyClick = {
@@ -525,7 +546,18 @@ internal fun SubPostsContent(
                             onReplyClick = {
                                 val fid = forum?.get { id } ?: forumId
                                 if (fid != 0L) {
-                                    showReplyDialog(
+				goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
+                                threadId,
+                                fid,
+                                forum?.get { name } ?: "",
+                                anti?.get { tbs },
+				post?.get { id } ?: postId,
+				it.id,
+				post!!.get { floor },
+                                it.author?.nameShow.takeIf { name -> !name.isNullOrEmpty() } ?: it.author?.name,
+				account.name
+                            ).setPn(currentPage).toString()) }
+                                    /* showReplyDialog(
                                         ReplyArgs(
                                             forumId = fid,
                                             forumName = forum?.get { name } ?: "",
@@ -537,7 +569,7 @@ internal fun SubPostsContent(
                                                 ?: it.author?.name,
                                             replyUserPortrait = it.author?.portrait,
                                         )
-                                    )
+                                    ) */
                                 }
                             },
                             onMenuCopyClick = {

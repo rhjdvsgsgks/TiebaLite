@@ -383,13 +383,13 @@ internal fun SubPostsContent(
                                         val fid = forum?.get { id } ?: forumId
                                         val forumName = forum?.get { name }
                                         if (fid != 0L) {
-						goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
+						context.goToActivity<ReplyActivity> {  putExtra("data", ReplyInfoBean(
                                 threadId.toString(),
                                 fid.toString(),
                                 forumName,
                                 anti?.get { tbs },
 				account.name
-                            ).setPn(currentPage.toString()).toString()) }
+                            ).setPn(currentPage.toString()).setPid((post?.get { id } ?: postId).toString()).toString()) }
                                             /*showReplyDialog(
                                                 ReplyArgs(
                                                     forumId = fid,
@@ -467,7 +467,7 @@ internal fun SubPostsContent(
                                     onReplyClick = {
                                         val fid = forum?.get { id } ?: forumId
                                         if (fid != 0L) {
-				goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
+				context.goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
                                 threadId.toString(),
                                 fid.toString(),
                                 forum?.get { name } ?: "",
@@ -546,7 +546,7 @@ internal fun SubPostsContent(
                             onReplyClick = {
                                 val fid = forum?.get { id } ?: forumId
                                 if (fid != 0L) {
-				goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
+				context.goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
                                 threadId.toString(),
                                 fid.toString(),
                                 forum?.get { name } ?: "",

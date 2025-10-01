@@ -96,6 +96,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.huanchengfly.tieba.post.App
 import com.huanchengfly.tieba.post.R
+import com.huanchengfly.tieba.post.activities.ReplyActivity
 import com.huanchengfly.tieba.post.api.TiebaApi
 import com.huanchengfly.tieba.post.api.booleanToString
 import com.huanchengfly.tieba.post.api.models.protos.Post
@@ -113,6 +114,8 @@ import com.huanchengfly.tieba.post.arch.onEvent
 import com.huanchengfly.tieba.post.arch.onGlobalEvent
 import com.huanchengfly.tieba.post.arch.pageViewModel
 import com.huanchengfly.tieba.post.arch.wrapImmutable
+import com.huanchengfly.tieba.post.goToActivity
+import com.huanchengfly.tieba.post.models.ReplyInfoBean
 import com.huanchengfly.tieba.post.models.ThreadHistoryInfoBean
 import com.huanchengfly.tieba.post.models.database.History
 import com.huanchengfly.tieba.post.toJson
@@ -677,6 +680,8 @@ fun ThreadPage(
         }
     }
 
+    val account = LocalAccount.current
+
     MyBackHandler(
         enabled = bottomSheetState.isVisible,
         currentScreen = ThreadPageDestination
@@ -941,7 +946,17 @@ fun ThreadPage(
                 )
             },
             onReplyClick = {
-                navigator.navigate(
+                context.goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
+                    threadId.toString(),
+                    (curForumId ?: 0).toString(),
+                    forum?.get { name } ?: "",
+                    curTbs,
+                    it.id.toString(),
+                    it.floor.toString(),
+                    it.author?.nameShow.takeIf { name -> !name.isNullOrEmpty() } ?: it.author?.name,
+                    account?.name
+                ).setPn(currentPageMax.toString()).toString()) }
+                /*navigator.navigate(
                     ReplyPageDestination(
                         forumId = curForumId ?: 0,
                         forumName = forum?.get { name } ?: "",
@@ -952,10 +967,22 @@ fun ThreadPage(
                             ?: it.author?.name,
                         replyUserPortrait = it.author?.portrait,
                     )
-                )
+                )*/
             },
             onSubPostReplyClick = { post, subPost ->
-                navigator.navigate(
+                context.goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
+                    threadId.toString(),
+                    (curForumId ?: 0).toString(),
+                    forum?.get { name } ?: "",
+                    curTbs,
+                    post.id.toString(),
+                    subPost.id.toString(),
+                    subPost.floor.toString(),
+                    subPost.author?.nameShow.takeIf { name -> !name.isNullOrEmpty() }
+                        ?: subPost.author?.name,
+                    account?.name
+                ).setPn(currentPageMax.toString()).toString()) }
+                /*navigator.navigate(
                     ReplyPageDestination(
                         forumId = curForumId ?: 0,
                         forumName = forum?.get { name } ?: "",
@@ -967,7 +994,7 @@ fun ThreadPage(
                             ?: subPost.author?.name,
                         replyUserPortrait = subPost.author?.portrait,
                     )
-                )
+                )*/
             },
             onOpenSubPosts = {
                 if (curForumId != null) {
@@ -1124,13 +1151,20 @@ fun ThreadPage(
                     BottomBar(
                         user = user,
                         onClickReply = {
-                            navigator.navigate(
+                            context.goToActivity<ReplyActivity> {  putExtra("data", ReplyInfoBean(
+                                threadId.toString(),
+                                (curForumId ?: 0).toString(),
+                                forum?.get { name }.orEmpty(),
+                                anti?.get { tbs },
+                                account?.name
+                            ).setPn(currentPageMax.toString()).toString()) }
+                            /*navigator.navigate(
                                 ReplyPageDestination(
                                     forumId = curForumId ?: 0,
                                     forumName = forum?.get { name }.orEmpty(),
                                     threadId = threadId,
                                 )
-                            )
+                            )*/
                         },
                         onAgree = {
                             val firstPostId =
@@ -1357,14 +1391,21 @@ fun ThreadPage(
                                                         )
                                                     },
                                                     onReplyClick = {
-                                                        navigator.navigate(
+                                                        context.goToActivity<ReplyActivity> {  putExtra("data", ReplyInfoBean(
+                                                            threadId.toString(),
+                                                            (curForumId ?: 0).toString(),
+                                                            forum?.get { name }.orEmpty(),
+                                                            anti?.get { tbs },
+                                                            account?.name
+                                                        ).setPn(currentPageMax.toString()).toString()) }
+                                                        /*navigator.navigate(
                                                             ReplyPageDestination(
                                                                 forumId = curForumId ?: 0,
                                                                 forumName = forum?.get { name }
                                                                     .orEmpty(),
                                                                 threadId = threadId,
                                                             )
-                                                        )
+                                                        )*/
                                                     },
                                                     onMenuCopyClick = {
                                                         navigator.navigate(

@@ -340,13 +340,13 @@ internal fun SubPostsContent(
                                         val fid = forum?.get { id } ?: forumId
                                         val forumName = forum?.get { name }
                                         if (!forumName.isNullOrEmpty()) {
-						goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
+						context.goToActivity<ReplyActivity> {  putExtra("data", ReplyInfoBean(
                                 threadId.toString(),
                                 fid.toString(),
                                 forumName,
                                 anti?.get { tbs },
 				account.name
-                            ).setPn(currentPage.toString()).toString()) }
+                            ).setPn(currentPage.toString()).setPid(postId.toString()).toString()) }
                                             /*navigator.navigate(
                                                 ReplyPageDestination(
                                                     forumId = fid,
@@ -422,7 +422,7 @@ internal fun SubPostsContent(
                                         )
                                     },
                                     onReplyClick = {
-				goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
+				context.goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
                                 threadId.toString(),
                                 forumId.toString(),
                                 forum?.get { name } ?: "",
@@ -498,7 +498,7 @@ internal fun SubPostsContent(
                                 )
                             },
                             onReplyClick = {
-				goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
+				context.goToActivity<ReplyActivity> { putExtra("data", ReplyInfoBean(
                                 threadId.toString(),
                                 forumId.toString(),
                                 forum?.get { name } ?: "",

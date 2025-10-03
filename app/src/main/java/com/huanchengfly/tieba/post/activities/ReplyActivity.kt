@@ -221,6 +221,7 @@ class ReplyActivity : BaseActivity(), View.OnClickListener,
     private fun initData() {
         val intent = intent
         val jsonData = intent.getStringExtra("data")
+                        Log.i(TAG, "init ReplyActivity: $jsonData")
         replyInfoBean = GsonUtil.getGson().fromJson(jsonData, ReplyInfoBean::class.java)
         val draft = where("hash = ?", replyInfoBean?.hash() ?: "")
             .findFirst(Draft::class.java)

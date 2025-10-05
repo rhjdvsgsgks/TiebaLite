@@ -51,6 +51,7 @@ import com.huanchengfly.tieba.post.ui.widgets.compose.VoicePlayer
 import com.huanchengfly.tieba.post.utils.EmoticonUtil.emoticonString
 import com.huanchengfly.tieba.post.utils.appPreferences
 import com.huanchengfly.tieba.post.utils.launchUrl
+import android.os.Build
 
 @Stable
 interface PbContentRender {
@@ -100,7 +101,7 @@ data class TextContentRender(
         ) {
             val lastRender = lastOrNull()
             if (lastRender is TextContentRender) {
-                removeAt(lastIndex)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) removeLast() else removeAt(lastIndex)
                 add(lastRender + text)
             } else
                 add(TextContentRender(text))
@@ -111,7 +112,7 @@ data class TextContentRender(
         ) {
             val lastRender = lastOrNull()
             if (lastRender is TextContentRender) {
-                removeAt(lastIndex)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) removeLast() else removeAt(lastIndex)
                 add(lastRender + text)
             } else
                 add(TextContentRender(text))
@@ -354,3 +355,5 @@ fun PbContentText(
         style = style
     )
 }
+
+

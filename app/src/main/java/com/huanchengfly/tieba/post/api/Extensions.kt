@@ -5,6 +5,7 @@ import okhttp3.FormBody
 import okio.Buffer
 import java.net.URLDecoder
 import java.net.URLEncoder
+import android.os.Build
 
 fun String.urlEncode(): String = runCatching { URLEncoder.encode(this, "UTF-8") }.getOrDefault(this)
 
@@ -80,7 +81,7 @@ fun MyMultipartBody.Part.contentDisposition(): Map<String, String> {
     headers?.toString()?.split(";")?.forEach {
         val header = it.trim().split("=").toMutableList()
         if (header.size >= 2) {
-            val name = header.removeAt(0).trim()
+            val name = header.run{ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) removeFirst() else removeAt(0)}.trim()
             val value = header.joinToString("=").trim().trim('"')
             headersMap[name] = value
         }
@@ -137,3 +138,5 @@ internal inline fun List<ParamExpression>.forEachNonNull(action: (String, String
         }
     }
 }
+
+

@@ -344,7 +344,7 @@ internal fun SubPostsContent(
                                 threadId.toString(),
                                 fid.toString(),
                                 forumName,
-                                anti?.get { tbs },
+                                anti?.get { tbs } ?: account.tbs,
 				account.name
                             ).setPn(currentPage.toString()).setPid(postId.toString()).toString()) }
                                             /*navigator.navigate(
@@ -426,7 +426,7 @@ internal fun SubPostsContent(
                                 threadId.toString(),
                                 forumId.toString(),
                                 forum?.get { name } ?: "",
-                                anti?.get { tbs },
+                                anti?.get { tbs } ?: account?.tbs,
 				postId.toString(),
 				post!!.get { floor }.toString(),
                                 it.author?.nameShow.takeIf { name -> !name.isNullOrEmpty() } ?: it.author?.name,
@@ -502,7 +502,7 @@ internal fun SubPostsContent(
                                 threadId.toString(),
                                 forumId.toString(),
                                 forum?.get { name } ?: "",
-                                anti?.get { tbs },
+                                anti?.get { tbs } ?: account?.tbs,
 				postId.toString(),
 				it.id.toString(),
 				post!!.get { floor }.toString(),

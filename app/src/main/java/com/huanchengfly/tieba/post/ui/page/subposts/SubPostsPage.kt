@@ -387,7 +387,7 @@ internal fun SubPostsContent(
                                 threadId.toString(),
                                 fid.toString(),
                                 forumName,
-                                anti?.get { tbs },
+                                anti?.get { tbs } ?: account.tbs,
 				account.name
                             ).setPn(currentPage.toString()).setPid((post?.get { id } ?: postId).toString()).toString()) }
                                             /*showReplyDialog(
@@ -471,7 +471,7 @@ internal fun SubPostsContent(
                                 threadId.toString(),
                                 fid.toString(),
                                 forum?.get { name } ?: "",
-                                anti?.get { tbs },
+                                anti?.get { tbs } ?: account?.tbs,
 				(post?.get { id } ?: postId).toString(),
 				post!!.get { floor }.toString(),
                                 it.author?.nameShow.takeIf { name -> !name.isNullOrEmpty() } ?: it.author?.name,
@@ -550,7 +550,7 @@ internal fun SubPostsContent(
                                 threadId.toString(),
                                 fid.toString(),
                                 forum?.get { name } ?: "",
-                                anti?.get { tbs },
+                                anti?.get { tbs } ?: account?.tbs,
 				(post?.get { id } ?: postId).toString(),
 				it.id.toString(),
 				post!!.get { floor }.toString(),

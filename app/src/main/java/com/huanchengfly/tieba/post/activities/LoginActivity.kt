@@ -19,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import android.os.Build
 
 class LoginActivity : BaseActivity(), WebViewListener {
     private var isLoadingAccount = false
@@ -57,7 +58,7 @@ class LoginActivity : BaseActivity(), WebViewListener {
             val cookie = it.trim()
             val cookieSplit = cookie.split("=").toMutableList()
             if (cookieSplit.size > 1) {
-                val name = cookieSplit.removeFirst()
+                val name = cookieSplit.run{ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) removeFirst() else removeAt(0)}
                 cookieMap[name] = cookieSplit.joinToString("=")
             }
         }

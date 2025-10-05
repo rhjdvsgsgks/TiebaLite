@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.huanchengfly.tieba.post.utils.GsonUtil;
 
 import java.util.Objects;
+import android.util.Log;
 
 public class ReplyInfoBean {
     private String threadId;
@@ -32,6 +33,8 @@ public class ReplyInfoBean {
         this.replyUser = replyUser;
         this.nickName = nickName;
         this.isSubFloor = !TextUtils.equals(pid, spid);
+                        Log.i("ReplyInfoBean",  threadId +" "+ forumId+" "+  forumName+" "+  tbs+" "+  pid+" "+ spid+" "+  floorNum+" "+  replyUser+" "+  nickName);
+    Log.d("ReplyInfoBean", Log.getStackTraceString(new Exception()));
     }
 
     public ReplyInfoBean(String threadId, String forumId, String forumName, String tbs, String pid, String floorNum, String replyUser, String nickName) {
@@ -45,6 +48,8 @@ public class ReplyInfoBean {
         this.replyUser = replyUser;
         this.nickName = nickName;
         this.isSubFloor = false;
+                        Log.i("ReplyInfoBean",  threadId +" "+ forumId+" "+  forumName+" "+  tbs+" "+  pid+" "+   floorNum+" "+  replyUser+" "+  nickName);
+    Log.d("ReplyInfoBean", Log.getStackTraceString(new Exception()));
     }
 
     public ReplyInfoBean(String threadId, String forumId, String forumName, String tbs, String nickName) {
@@ -56,6 +61,8 @@ public class ReplyInfoBean {
         this.spid = null;
         this.nickName = nickName;
         this.isSubFloor = false;
+                        Log.i("ReplyInfoBean",  threadId +" "+ forumId+" "+  forumName+" "+  tbs+" "+  nickName);
+    Log.d("ReplyInfoBean", Log.getStackTraceString(new Exception()));
     }
 
     public String hash() {

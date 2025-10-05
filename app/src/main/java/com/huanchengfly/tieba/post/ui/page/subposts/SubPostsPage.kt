@@ -388,8 +388,11 @@ internal fun SubPostsContent(
                                 fid.toString(),
                                 forumName,
                                 anti?.get { tbs } ?: account.tbs,
+                                (post?.get { id } ?: postId).toString(),
+				post!!.get { floor }.toString(),
+                             post?.get { author?.nameShow.takeIf { name -> !name.isNullOrEmpty() } ?: author?.name },
 				account.name
-                            ).setPn(currentPage.toString()).setPid((post?.get { id } ?: postId).toString()).toString()) }
+                            ).setPn(currentPage.toString()).toString()) }
                                             /*showReplyDialog(
                                                 ReplyArgs(
                                                     forumId = fid,
@@ -473,7 +476,7 @@ internal fun SubPostsContent(
                                 forum?.get { name } ?: "",
                                 anti?.get { tbs } ?: account?.tbs,
 				(post?.get { id } ?: postId).toString(),
-				post!!.get { floor }.toString(),
+				it.floor.toString(),
                                 it.author?.nameShow.takeIf { name -> !name.isNullOrEmpty() } ?: it.author?.name,
 				account?.name
                             ).setPn(currentPage.toString()).toString()) }

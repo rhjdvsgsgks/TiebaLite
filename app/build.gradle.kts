@@ -253,6 +253,7 @@ dependencies {
     implementation(retrofit2.converter.wire)
 
     implementation(google.gson)
+    implementation(com.github.dsappteam.panelswitchhelper)
     implementation(org.litepal.android.kotlin)
     implementation(com.jaredrummler.colorpicker)
 

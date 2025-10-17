@@ -36,6 +36,7 @@
     <string name="title_reply">回复</string>
     <string name="title_thread">发帖</string>
     <string name="tip_reply">评论一番，提高自己的姿势水平…</string>
+    <string name="title_send">发送</string>
     <string name="title_account_manage">账号管理</string>
     <string name="title_block_settings">屏蔽设置</string>
     <string name="toast_reply_success_default">回贴成功</string>
@@ -196,6 +197,7 @@
 
     <string name="title_share_pic">分享图片</string>
     <string name="tip_permission_storage_download">用于下载文件</string>
+    <string name="toast_max_selectable">最多选择 10 张图片</string>
     <string name="title_show_both_username_and_nickname">同时显示用户名和昵称</string>
     <string name="title_dialog_clip_board_tieba_url">是否要打开剪贴板中的链接</string>
     <string name="subtitle_quick_preview_thread">来自%1$s吧，共 %2$s 条回复</string>
@@ -211,6 +213,8 @@
     <string name="toast_sign_failed">签到失败 %s</string>
     <string name="toast_like_failed">关注失败 %s</string>
     <string name="hint_reply">回复 %1$s</string>
+    <string name="title_emoticon_classic">经典</string>
+    <string name="title_emoticon_emoji">符号</string>
     <string name="tip_thread_store_update">更新到 %1$s 楼</string>
     <string name="title_switch_list_single">切换至单列</string>
     <string name="text_load_failed">加载失败</string>
@@ -352,6 +356,7 @@
     <string name="title_oksign_use_official_oksign">使用官方一键签到</string>
     <string name="summary_oksign_use_official_oksign">先使用官方一键签到减少需签到吧数量，以加快签到速度</string>
     <string name="title_stat_posts_num">回贴</string>
+    <string name="toast_data_error">数据错误</string>
     <string name="toast_feature_unavailable">该功能尚未实现</string>
     <string name="title_check_ci_update">接收自动构建版本更新</string>
     <string name="tip_check_ci_update">仅供测试</string>

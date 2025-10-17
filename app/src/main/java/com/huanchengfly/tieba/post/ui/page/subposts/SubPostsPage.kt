@@ -159,6 +159,7 @@ internal fun SubPostsContent(
     isSheet: Boolean = false,
     onNavigateUp: () -> Unit = {},
 ) {
+    val context = LocalContext.current
     val navigator = LocalNavigator.current
     val account = LocalAccount.current
 

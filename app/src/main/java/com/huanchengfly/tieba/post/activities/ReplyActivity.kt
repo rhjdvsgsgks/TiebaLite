@@ -577,14 +577,14 @@ class ReplyActivity : BaseActivity(), View.OnClickListener,
                                 R.string.toast_reply_success_default,
                                 Toast.LENGTH_SHORT
                             ).show()
-                            sendBroadcast(
+                            /*sendBroadcast(
                                 Intent()
                                     .setAction(ThreadActivity.ACTION_REPLY_SUCCESS)
                                     .putExtra(
                                         "pid",
                                         if (replyInfoBean!!.pid != null) replyInfoBean!!.pid else it.data.pid
                                     )
-                            )
+                            )*/
                             replySuccess = true
                             finish()
                         }.doIfFailure {

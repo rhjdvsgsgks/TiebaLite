@@ -1225,6 +1225,34 @@ object MixedTiebaApiImpl : ITiebaApi {
             )
     }
 
+    override fun webreplyflow(
+        content: String,
+        forumId: String,
+        forumName: String,
+        threadId: String,
+        tbs: String?,
+        nameShow: String?,
+        postId: String?,
+        subPostId: String?,
+        replyUserId: String?
+    ): Flow<WebReplyResultBean> {
+        return RetrofitTiebaApi.WEB_TIEBA_API.webReplyflow(
+            content = content,
+            imgInfo = "",
+            forumId = forumId,
+            forumName = forumName,
+            tbs = tbs ?: AccountUtil.getAccountInfo { this.tbs }.orEmpty(),
+            threadId = threadId,
+            nickName = nameShow ?: AccountUtil.getAccountInfo { this.nameShow }
+                .orEmpty(),
+            postId = postId,
+            replyPostId = subPostId,
+            floor = "",
+            bsk = "",
+            referer = "https://tieba.baidu.com/p/$threadId"
+        )
+    }
+
     override fun userProfileFlow(uid: Long): Flow<ProfileResponse> {
         val selfUid = AccountUtil.getUid()?.toLongOrNull()
         val isSelf = selfUid == uid

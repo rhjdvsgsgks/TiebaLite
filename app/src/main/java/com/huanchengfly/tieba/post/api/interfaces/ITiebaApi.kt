@@ -1414,6 +1414,18 @@ interface ITiebaApi {
         replyUserId: String? = null
     ): Flow<AddPostResponse>
 
+    fun webreplyflow(
+        content: String,
+        forumId: String,
+        forumName: String,
+        threadId: String,
+        tbs: String? = null,
+        nameShow: String? = null,
+        postId: String? = null,
+        subPostId: String? = null,
+        replyUserId: String? = null
+    ): Flow<WebReplyResultBean>
+
     /**
      * 用户信息（Flow）
      *

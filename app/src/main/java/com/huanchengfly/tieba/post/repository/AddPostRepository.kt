@@ -2,6 +2,7 @@ package com.huanchengfly.tieba.post.repository
 
 import com.huanchengfly.tieba.post.api.TiebaApi
 import com.huanchengfly.tieba.post.api.models.AddThreadBean
+import com.huanchengfly.tieba.post.api.models.WebReplyResultBean
 import com.huanchengfly.tieba.post.api.models.protos.addPost.AddPostResponse
 import com.huanchengfly.tieba.post.arch.GlobalEvent
 import com.huanchengfly.tieba.post.arch.emitGlobalEvent
@@ -64,6 +65,48 @@ object AddPostRepository {
             )
             .onEach {
                 val newPostId = checkNotNull(it.data_?.pid?.toLongOrNull())
+                GlobalScope.launch {
+                    if (postId != null) {
+                        emitGlobalEvent(
+                            GlobalEvent.ReplySuccess(
+                                threadId,
+                                postId,
+                                postId,
+                                subPostId,
+                                newPostId
+                            )
+                        )
+                    } else {
+                        emitGlobalEvent(GlobalEvent.ReplySuccess(threadId, newPostId))
+                    }
+                }
+            }
+
+    fun webreply(
+        content: String,
+        forumId: Long,
+        forumName: String,
+        threadId: Long,
+        tbs: String? = null,
+        nameShow: String? = null,
+        postId: Long? = null,
+        subPostId: Long? = null,
+        replyUserId: Long? = null,
+    ): Flow<WebReplyResultBean> =
+        TiebaApi.getInstance()
+            .webreplyflow(
+                content,
+                forumId.toString(),
+                forumName,
+                threadId.toString(),
+                tbs,
+                nameShow,
+                postId?.toString(),
+                subPostId?.toString(),
+                replyUserId?.toString()
+            )
+            .onEach {
+                val newPostId = checkNotNull(it.data.pid)
                 GlobalScope.launch {
                     if (postId != null) {
                         emitGlobalEvent(

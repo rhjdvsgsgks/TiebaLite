@@ -9,6 +9,7 @@ import com.huanchengfly.tieba.post.App
 import com.huanchengfly.tieba.post.R
 import com.huanchengfly.tieba.post.api.models.AddThreadBean
 import com.huanchengfly.tieba.post.api.models.UploadPictureResultBean
+import com.huanchengfly.tieba.post.api.models.WebReplyResultBean
 import com.huanchengfly.tieba.post.api.models.protos.addPost.AddPostResponse
 import com.huanchengfly.tieba.post.api.retrofit.exception.TiebaUnknownException
 import com.huanchengfly.tieba.post.api.retrofit.exception.getErrorCode
@@ -140,6 +141,23 @@ class ReplyViewModel @Inject constructor() :
                     }
             }
             return AddPostRepository
+                .webreply(
+                    content,
+                    forumId,
+                    forumName,
+                    threadId,
+                    tbs,
+                    postId = postId,
+                    subPostId = subPostId,
+                    replyUserId = replyUserId
+                ).map<WebReplyResultBean, ReplyPartialChange.Send> {
+                    ReplyPartialChange.Send.Success(
+                        threadId = it.data.tid.toString(),
+                        postId = it.data.pid.toString(),
+                        expInc = ""
+                    )
+                }
+                /*
                 .addPost(
                     content,
                     forumId,
@@ -158,6 +176,7 @@ class ReplyViewModel @Inject constructor() :
                         expInc = it.data_.exp?.inc.orEmpty()
                     )
                 }
+                */
                 .onStart { emit(ReplyPartialChange.Send.Start) }
                 .catch {
                     Log.i("ReplyViewModel", "failure: ${it.message}")

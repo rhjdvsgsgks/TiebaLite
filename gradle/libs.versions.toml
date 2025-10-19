@@ -194,3 +194,6 @@ com-github-yalantis-ucrop = { group = "com.github.yalantis", name = "ucrop", ver
 # ButterKnife
 com-jakewharton-butterknife = { group = "com.jakewharton", name = "butterknife", version = "10.2.3" }
 com-jakewharton-butterknife-compiler = { group = "com.jakewharton", name = "butterknife-compiler", version = "10.2.3" }
+
+# Quickjs
+io-github-dokar3-quickjs-kt-android = { group = "io.github.dokar3", name = "quickjs-kt-android", version = "1.0.0-alpha13" }

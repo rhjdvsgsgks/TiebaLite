@@ -279,4 +279,6 @@ dependencies {
 
     implementation(libs.com.jakewharton.butterknife)
     kapt(libs.com.jakewharton.butterknife.compiler)
+
+    implementation(libs.io.github.dokar3.quickjs.kt.android)
 }

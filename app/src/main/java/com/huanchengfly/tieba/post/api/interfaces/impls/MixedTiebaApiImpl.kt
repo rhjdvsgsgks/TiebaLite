@@ -136,6 +136,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
 import java.net.URLEncoder
+import com.dokar.quickjs.quickJs
 
 object MixedTiebaApiImpl : ITiebaApi {
     override fun personalized(loadType: Int, page: Int): Call<PersonalizedBean> =
@@ -1248,7 +1249,14 @@ object MixedTiebaApiImpl : ITiebaApi {
             postId = postId,
             replyPostId = subPostId,
             floor = "",
-            bsk = "",
+            bsk = quickJs {
+        evaluate<String>(
+          AssetUtil.getStringFromAsset(
+                this,
+                "new_bsk.js"
+            ) + "get_bsk_data(\"${tbs ?: AccountUtil.getAccountInfo { this.tbs }}\")"
+)
+    },
             referer = "https://tieba.baidu.com/p/$threadId"
         )
     }

@@ -140,6 +140,7 @@ class ReplyViewModel @Inject constructor() :
                         )
                     }
             }
+
             return AddPostRepository
                 .webreply(
                     content,
@@ -147,6 +148,7 @@ class ReplyViewModel @Inject constructor() :
                     forumName,
                     threadId,
                     tbs,
+                    bsk,
                     postId = postId,
                     subPostId = subPostId,
                     replyUserId = replyUserId
@@ -241,6 +243,7 @@ sealed interface ReplyUiIntent : UiIntent {
         val forumName: String,
         val threadId: Long,
         val tbs: String,
+        val bsk: String,
         val postId: Long? = null,
         val subPostId: Long? = null,
         val replyUserId: Long? = null,

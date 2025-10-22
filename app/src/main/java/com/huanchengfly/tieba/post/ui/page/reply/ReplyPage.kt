@@ -80,6 +80,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.widget.addTextChangedListener
+import com.dokar.quickjs.quickJs
 import com.github.panpf.sketch.compose.AsyncImage
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.huanchengfly.tieba.post.R
@@ -110,6 +111,7 @@ import com.huanchengfly.tieba.post.ui.widgets.compose.debounceClickable
 import com.huanchengfly.tieba.post.ui.widgets.compose.rememberDialogState
 import com.huanchengfly.tieba.post.ui.widgets.edittext.widget.UndoableEditText
 import com.huanchengfly.tieba.post.utils.AccountUtil
+import com.huanchengfly.tieba.post.utils.AssetUtil
 import com.huanchengfly.tieba.post.utils.Emoticon
 import com.huanchengfly.tieba.post.utils.EmoticonManager
 import com.huanchengfly.tieba.post.utils.PickMediasRequest
@@ -205,6 +207,27 @@ internal fun ReplyPageContent(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val curTbs = remember(tbs) { tbs ?: AccountUtil.getAccountInfo { this.tbs }.orEmpty() }
+    /*var bsk by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(curTbs) {
+        bsk = quickJs {
+            evaluate<String>(
+                AssetUtil.getStringFromAsset(
+                    context,
+                    "new_bsk.js"
+                    ) + "get_bsk_data(\"$curTbs\")"
+                )
+            }
+    }*/
+    val bsk by produceState<String?>(initialValue = null, curTbs) {
+        value = quickJs {
+            evaluate<String>(
+                AssetUtil.getStringFromAsset(
+                    context,
+                    "new_bsk.js"
+                ) + "get_bsk_data(\"$curTbs\")"
+            )
+        }
+    }
 
     val isUploading by viewModel.uiState.collectPartialAsState(
         prop1 = ReplyUiState::isUploading,
@@ -324,6 +347,7 @@ internal fun ReplyPageContent(
                     forumName,
                     threadId,
                     curTbs,
+                    bsk!!,
                     postId,
                     subPostId,
                     replyUserId,
@@ -433,7 +457,7 @@ internal fun ReplyPageContent(
         }
     }
 
-    val canSend by remember { derivedStateOf { !isTextEmpty || selectedImageList.isNotEmpty() } }
+    val canSend by remember { derivedStateOf { (!isTextEmpty || selectedImageList.isNotEmpty()) && !bsk.isNullOrEmpty() } }
 
     val textFieldScrollState = rememberScrollState()
 
@@ -609,6 +633,7 @@ internal fun ReplyPageContent(
                                     forumName = forumName,
                                     threadId = threadId,
                                     tbs = curTbs,
+                                    bsk = bsk!!,
                                     postId = postId,
                                     subPostId = subPostId,
                                     replyUserId = replyUserId

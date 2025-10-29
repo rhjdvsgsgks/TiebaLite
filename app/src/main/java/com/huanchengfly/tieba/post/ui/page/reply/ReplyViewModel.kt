@@ -40,6 +40,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.emitAll
 import javax.inject.Inject
 
 enum class ReplyPanelType {
@@ -144,7 +145,7 @@ class ReplyViewModel @Inject constructor() :
                     }
             }
 
-            return flow {
+            return flow<WebReplyResultBean> {
                 val bsk = quickJs {
                     maxStackSize = 563248
                     evaluate<String>(
@@ -155,7 +156,7 @@ class ReplyViewModel @Inject constructor() :
                     )
                 }
 
-                AddPostRepository
+                emitAll(AddPostRepository
                 .webreply(
                     content,
                     forumId,
@@ -165,7 +166,7 @@ class ReplyViewModel @Inject constructor() :
                     bsk,
                     postId = postId,
                     subPostId = subPostId
-                ).map<WebReplyResultBean, ReplyPartialChange.Send> {
+                ))}.map<WebReplyResultBean, ReplyPartialChange.Send> {
                     ReplyPartialChange.Send.Success(
                         threadId = it.data.tid.toString(),
                         postId = it.data.pid.toString(),
@@ -203,7 +204,7 @@ class ReplyViewModel @Inject constructor() :
                             )
                         )
                     }
-                }
+                
         }
 
         private fun ReplyUiIntent.UploadImages.producePartialChange() =

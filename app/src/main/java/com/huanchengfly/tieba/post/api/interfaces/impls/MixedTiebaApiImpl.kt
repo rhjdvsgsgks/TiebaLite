@@ -1238,7 +1238,6 @@ object MixedTiebaApiImpl : ITiebaApi {
     ): Flow<WebReplyResultBean> {
         return RetrofitTiebaApi.WEB_TIEBA_API.webReplyflow(
             content = content,
-            imgInfo = "",
             forumId = forumId,
             forumName = forumName,
             tbs = tbs,

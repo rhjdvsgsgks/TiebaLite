@@ -192,6 +192,11 @@ interface WebTiebaApi {
         @retrofit2.http.Header(Header.REFERER) referer: String
     ): Call<WebReplyResultBean>
 
+    @Headers(
+        "${Header.HOST}: tieba.baidu.com",
+        "${Header.ORIGIN}: https://tieba.baidu.com",
+        "X-Requested-With: XMLHttpRequest"
+    )
     @POST("/mo/q/apubpost")
     @FormUrlEncoded
     fun webReplyflow(
@@ -199,7 +204,7 @@ interface WebTiebaApi {
         @Field("co") content: String,
         @Field("_t") _t_form: Long = System.currentTimeMillis(),
         @Field("tag") tag: String = "11",
-        @Field("upload_img_info") imgInfo: String,
+        @Field("upload_img_info") imgInfo: String? = null,
         @Field("fid") forumId: String,
         @Field("src") src: String = "1",
         @Field("word") forumName: String,

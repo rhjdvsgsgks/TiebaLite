@@ -1248,7 +1248,6 @@ object MixedTiebaApiImpl : ITiebaApi {
                 .orEmpty(),
             postId = postId,
             replyPostId = subPostId,
-            floor = "",
             bsk = bsk,
             referer = "https://tieba.baidu.com/p/$threadId"
         )

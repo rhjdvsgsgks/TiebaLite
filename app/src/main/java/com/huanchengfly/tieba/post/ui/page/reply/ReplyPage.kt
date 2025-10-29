@@ -218,7 +218,7 @@ internal fun ReplyPageContent(
                 )
             }
     }*/
-    val bsk by produceState<String?>(initialValue = null, curTbs) {
+    /*val bsk by produceState<String?>(initialValue = null, curTbs) {
         value = quickJs {
             evaluate<String>(
                 AssetUtil.getStringFromAsset(
@@ -227,7 +227,7 @@ internal fun ReplyPageContent(
                 ) + "get_bsk_data(\"$curTbs\")"
             )
         }
-    }
+    }*/
 
     val isUploading by viewModel.uiState.collectPartialAsState(
         prop1 = ReplyUiState::isUploading,
@@ -347,7 +347,6 @@ internal fun ReplyPageContent(
                     forumName,
                     threadId,
                     curTbs,
-                    bsk!!,
                     postId,
                     subPostId,
                     replyUserId,
@@ -457,7 +456,7 @@ internal fun ReplyPageContent(
         }
     }
 
-    val canSend by remember { derivedStateOf { (!isTextEmpty || selectedImageList.isNotEmpty()) && !bsk.isNullOrEmpty() } }
+    val canSend by remember { derivedStateOf { (!isTextEmpty || selectedImageList.isNotEmpty())} }
 
     val textFieldScrollState = rememberScrollState()
 
@@ -633,7 +632,6 @@ internal fun ReplyPageContent(
                                     forumName = forumName,
                                     threadId = threadId,
                                     tbs = curTbs,
-                                    bsk = bsk!!,
                                     postId = postId,
                                     subPostId = subPostId,
                                     replyUserId = replyUserId

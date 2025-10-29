@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import com.dokar.quickjs.quickJs
 import com.huanchengfly.tieba.post.App
 import com.huanchengfly.tieba.post.R
 import com.huanchengfly.tieba.post.api.models.AddThreadBean
@@ -23,6 +24,7 @@ import com.huanchengfly.tieba.post.arch.UiIntent
 import com.huanchengfly.tieba.post.arch.UiState
 import com.huanchengfly.tieba.post.components.ImageUploader
 import com.huanchengfly.tieba.post.repository.AddPostRepository
+import com.huanchengfly.tieba.post.utils.AssetUtil
 import com.huanchengfly.tieba.post.utils.FileUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -33,6 +35,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
@@ -141,7 +144,18 @@ class ReplyViewModel @Inject constructor() :
                     }
             }
 
-            return AddPostRepository
+            return flow {
+                val bsk = quickJs {
+                    maxStackSize = 563248
+                    evaluate<String>(
+                        AssetUtil.getStringFromAsset(
+                            App.INSTANCE,
+                            "new_bsk.js"
+                        ) + "get_bsk_data(\"$tbs\")"
+                    )
+                }
+
+                AddPostRepository
                 .webreply(
                     content,
                     forumId,
@@ -183,7 +197,13 @@ class ReplyViewModel @Inject constructor() :
                 .catch {
                     Log.i("ReplyViewModel", "failure: ${it.message}")
                     it.printStackTrace()
-                    emit(ReplyPartialChange.Send.Failure(it.getErrorCode(), it.getErrorMessage()))
+                        emit(
+                            ReplyPartialChange.Send.Failure(
+                                it.getErrorCode(),
+                                it.getErrorMessage()
+                            )
+                        )
+                    }
                 }
         }
 
@@ -243,7 +263,6 @@ sealed interface ReplyUiIntent : UiIntent {
         val forumName: String,
         val threadId: Long,
         val tbs: String,
-        val bsk: String,
         val postId: Long? = null,
         val subPostId: Long? = null,
         val replyUserId: Long? = null,

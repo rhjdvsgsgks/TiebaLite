@@ -91,8 +91,7 @@ object AddPostRepository {
         bsk: String,
         nameShow: String? = null,
         postId: Long? = null,
-        subPostId: Long? = null,
-        replyUserId: Long? = null,
+        subPostId: Long? = null
     ): Flow<WebReplyResultBean> =
         TiebaApi.getInstance()
             .webreplyflow(
@@ -104,8 +103,7 @@ object AddPostRepository {
                 bsk,
                 nameShow,
                 postId?.toString(),
-                subPostId?.toString(),
-                replyUserId?.toString()
+                subPostId?.toString()
             )
             .onEach {
                 val newPostId = checkNotNull(it.data.pid)

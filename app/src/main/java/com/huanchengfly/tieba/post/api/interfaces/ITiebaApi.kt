@@ -1423,8 +1423,7 @@ interface ITiebaApi {
         bsk: String,
         nameShow: String? = null,
         postId: String? = null,
-        subPostId: String? = null,
-        replyUserId: String? = null
+        subPostId: String? = null
     ): Flow<WebReplyResultBean>
 
     /**

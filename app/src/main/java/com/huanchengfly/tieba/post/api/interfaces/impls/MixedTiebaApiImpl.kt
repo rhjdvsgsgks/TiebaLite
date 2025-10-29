@@ -1234,8 +1234,7 @@ object MixedTiebaApiImpl : ITiebaApi {
         bsk: String,
         nameShow: String?,
         postId: String?,
-        subPostId: String?,
-        replyUserId: String?
+        subPostId: String?
     ): Flow<WebReplyResultBean> {
         return RetrofitTiebaApi.WEB_TIEBA_API.webReplyflow(
             content = content,

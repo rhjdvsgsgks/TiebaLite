@@ -164,8 +164,7 @@ class ReplyViewModel @Inject constructor() :
                     tbs,
                     bsk,
                     postId = postId,
-                    subPostId = subPostId,
-                    replyUserId = replyUserId
+                    subPostId = subPostId
                 ).map<WebReplyResultBean, ReplyPartialChange.Send> {
                     ReplyPartialChange.Send.Success(
                         threadId = it.data.tid.toString(),

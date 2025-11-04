@@ -34,6 +34,10 @@ import com.huanchengfly.tieba.post.utils.TiebaUtil
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.spec.DestinationStyle
+import androidx.compose.ui.viewinterop.AndroidView
+import android.view.View
+import com.huanchengfly.tieba.post.ui.widgets.edittext.widget.UndoableEditText
+import androidx.appcompat.widget.AppCompatEditText
 
 object CopyTextDialogStyle : DestinationStyle.Dialog {
     override val properties: DialogProperties
@@ -126,13 +130,20 @@ private fun CopyTextPageContent(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                SelectionContainer {
-                    Text(
-                        text = text,
-                        modifier = Modifier.fillMaxWidth(),
-                        style = MaterialTheme.typography.body1
-                    )
-                }
+                AndroidView(
+                    factory = { ctx ->
+                        (View.inflate(
+                            ctx,
+                            R.layout.copy_text,
+                            null
+                        ) as AppCompatEditText).apply {
+                                this.setText(text)
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+
             }
             Button(
                 modifier = Modifier.fillMaxWidth(),

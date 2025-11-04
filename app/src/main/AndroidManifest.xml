@@ -43,6 +43,11 @@
                 android:host="unidispatch"
                 android:scheme="com.baidu.tieba" />
         </intent>
+        <intent>
+            <action
+                android:name="android.intent.action.PROCESS_TEXT" />
+            <data android:mimeType="text/plain" />
+        </intent>
     </queries>
 
     <application

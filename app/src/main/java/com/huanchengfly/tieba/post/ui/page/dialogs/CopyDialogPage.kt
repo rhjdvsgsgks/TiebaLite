@@ -37,7 +37,7 @@ import com.ramcosta.composedestinations.spec.DestinationStyle
 import androidx.compose.ui.viewinterop.AndroidView
 import android.view.View
 import com.huanchengfly.tieba.post.ui.widgets.edittext.widget.UndoableEditText
-import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatTextView
 
 object CopyTextDialogStyle : DestinationStyle.Dialog {
     override val properties: DialogProperties
@@ -134,10 +134,11 @@ private fun CopyTextPageContent(
                     factory = { ctx ->
                         (View.inflate(
                             ctx,
-                            R.layout.copy_text,
+                            R.layout.layout_copy_text,
                             null
-                        ) as AppCompatEditText).apply {
+                        ) as AppCompatTextView).apply {
                                 this.setText(text)
+                                setTextIsSelectable(true)
                         }
                     },
                     modifier = Modifier

@@ -47,6 +47,7 @@ import dagger.hilt.android.HiltAndroidApp
 import net.swiftzer.semver.SemVer
 import org.litepal.LitePal
 import kotlin.concurrent.thread
+import com.huanchengfly.tieba.post.api.getUserAgent
 
 
 @HiltAndroidApp
@@ -165,7 +166,9 @@ class App : Application(), SketchFactory {
                     statusCode = -200
                     isTrackLimited = false
                 }
-                userAgent = WebSettings.getDefaultUserAgent(context)
+                try {
+                    userAgent = WebSettings.getDefaultUserAgent(context)
+                } catch (e: Exception) {}
                 appFirstInstallTime = context.packageInfo.firstInstallTime
                 appLastUpdateTime = context.packageInfo.lastUpdateTime
                 inited = true
@@ -738,7 +741,7 @@ class App : Application(), SketchFactory {
 
     override fun createSketch(): Sketch = Sketch.Builder(this).apply {
         httpStack(OkHttpStack.Builder().apply {
-            userAgent(System.getProperty("http.agent"))
+            userAgent(getUserAgent())
         }.build())
         components {
             addDrawableDecodeInterceptor(PauseLoadWhenScrollingDrawableDecodeInterceptor())

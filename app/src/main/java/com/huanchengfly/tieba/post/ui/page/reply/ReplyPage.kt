@@ -337,12 +337,13 @@ internal fun ReplyPageContent(
         if (waitUploadSuccessToSend) {
             waitUploadSuccessToSend = false
             val imageContent = it.resultList
-                .joinToString("\n") { image ->
-                    "#(pic,${image.picId ?: 0},${image.picInfo?.originPic?.width ?: 0},${image.picInfo?.originPic?.height ?: 0})"
+                .joinToString("|") { image ->
+                    "${Uri.parse(image.picInfo?.originPic?.picUrl).path?.split("/")?.last()?.split(".")?.first() ?: 0},${image.picInfo?.originPic?.width ?: 0},${image.picInfo?.originPic?.height ?: 0},false"
                 }
             viewModel.send(
                 ReplyUiIntent.Send(
-                    "${getText()}\n$imageContent",
+                    getText(),
+                    imageContent,
                     forumId,
                     forumName,
                     threadId,

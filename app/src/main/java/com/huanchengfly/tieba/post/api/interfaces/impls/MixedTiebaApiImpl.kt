@@ -1227,6 +1227,7 @@ object MixedTiebaApiImpl : ITiebaApi {
 
     override fun webreplyflow(
         content: String,
+        imgInfo: String?,
         forumId: String,
         forumName: String,
         threadId: String,
@@ -1238,6 +1239,7 @@ object MixedTiebaApiImpl : ITiebaApi {
     ): Flow<WebReplyResultBean> {
         return RetrofitTiebaApi.WEB_TIEBA_API.webReplyflow(
             content = content,
+            imgInfo = imgInfo,
             forumId = forumId,
             forumName = forumName,
             tbs = tbs,

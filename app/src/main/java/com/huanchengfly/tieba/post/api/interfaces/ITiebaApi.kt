@@ -1416,6 +1416,7 @@ interface ITiebaApi {
 
     fun webreplyflow(
         content: String,
+        imgInfo: String? = null,
         forumId: String,
         forumName: String,
         threadId: String,

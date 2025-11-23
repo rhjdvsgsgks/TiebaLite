@@ -159,6 +159,7 @@ class ReplyViewModel @Inject constructor() :
                 emitAll(AddPostRepository
                 .webreply(
                     content,
+                    imgInfo,
                     forumId,
                     forumName,
                     threadId,
@@ -259,6 +260,7 @@ sealed interface ReplyUiIntent : UiIntent {
 
     data class Send(
         val content: String,
+        val imgInfo: String? = null,
         val forumId: Long,
         val forumName: String,
         val threadId: Long,

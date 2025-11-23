@@ -84,6 +84,7 @@ object AddPostRepository {
 
     fun webreply(
         content: String,
+        imgInfo: String? = null,
         forumId: Long,
         forumName: String,
         threadId: Long,
@@ -96,6 +97,7 @@ object AddPostRepository {
         TiebaApi.getInstance()
             .webreplyflow(
                 content,
+                imgInfo,
                 forumId.toString(),
                 forumName,
                 threadId.toString(),

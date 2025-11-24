@@ -117,9 +117,6 @@ zoomimage-compose-sketch = { group = "io.github.panpf.zoomimage", name = "zoomim
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version = "1.1.1" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.2.1" }
 
-# OAID
-github-oaid = { group = "com.github.gzu-liyujiang", name = "Android_CN_OAID", version = "4.2.12" }
-
 # JetBrains
 org-jetbrains-annotations = { group = "org.jetbrains", name = "annotations", version = "26.0.2-1" }
 

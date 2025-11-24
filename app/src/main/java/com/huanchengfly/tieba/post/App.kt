@@ -17,7 +17,6 @@ import androidx.annotation.Keep
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.ui.graphics.toArgb
-import com.github.gzuliyujiang.oaid.DeviceID
 import com.github.panpf.sketch.Sketch
 import com.github.panpf.sketch.SketchFactory
 import com.github.panpf.sketch.decode.GifAnimatedDrawableDecoder
@@ -28,7 +27,6 @@ import com.github.panpf.sketch.http.OkHttpStack
 import com.github.panpf.sketch.request.PauseLoadWhenScrollingDrawableDecodeInterceptor
 import com.huanchengfly.tieba.post.activities.BaseActivity
 import com.huanchengfly.tieba.post.components.ClipBoardLinkDetector
-import com.huanchengfly.tieba.post.components.OAIDGetter
 import com.huanchengfly.tieba.post.ui.common.theme.compose.dynamicTonalPalette
 import com.huanchengfly.tieba.post.ui.common.theme.interfaces.ThemeSwitcher
 import com.huanchengfly.tieba.post.ui.common.theme.utils.ThemeUtils
@@ -89,7 +87,6 @@ class App : Application(), SketchFactory {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         ThemeUtils.init(ThemeDelegate)
         registerActivityLifecycleCallbacks(ClipBoardLinkDetector)
-        registerActivityLifecycleCallbacks(OAIDGetter)
         thread {
             BlockManager.init()
             EmoticonManager.init(this@App)
@@ -159,13 +156,6 @@ class App : Application(), SketchFactory {
 
         fun init(context: Context) {
             if (!inited) {
-                isOAIDSupported = DeviceID.supportedOAID(context)
-                if (isOAIDSupported) {
-                    DeviceID.getOAID(context, OAIDGetter)
-                } else {
-                    statusCode = -200
-                    isTrackLimited = false
-                }
                 try {
                     userAgent = WebSettings.getDefaultUserAgent(context)
                 } catch (e: Exception) {}

@@ -337,9 +337,13 @@ internal fun ReplyPageContent(
         if (waitUploadSuccessToSend) {
             waitUploadSuccessToSend = false
             val imageContent = it.resultList
-                .joinToString("|") { image ->
-                    "${Uri.parse(image.picInfo?.originPic?.picUrl).path?.split("/")?.last()?.split(".")?.first() ?: 0},${image.picInfo?.originPic?.width ?: 0},${image.picInfo?.originPic?.height ?: 0},false"
-                }
+                .mapNotNull { image ->
+			val w = image.picInfo?.originPic?.width?.toInt() ?: return@mapNotNull null
+			val h = image.picInfo?.originPic?.height?.toInt() ?: return@mapNotNull null
+			val max_edge = max(w, h)
+			val scale = if (max_edge > 570) 570f/max_edge else 1f
+                    "${Uri.parse(image.picInfo?.originPic?.picUrl).path?.split("/")?.last()?.split(".")?.first() ?: return@mapNotNull null},${(w*scale).toInt()},${(h*scale).toInt()},${scale!=1f}"
+                }.joinToString("|")
             viewModel.send(
                 ReplyUiIntent.Send(
                     getText(),

@@ -27,6 +27,7 @@ import com.huanchengfly.tieba.post.utils.StringUtil
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import android.net.Uri
 
 val List<Abstract>.abstractText: String
     get() = joinToString(separator = "") {
@@ -264,7 +265,7 @@ val List<PbContent>.renders: ImmutableList<PbContentRender>
                     val height = it.bsize.split(",")[1].toInt()
                     renders.add(
                         PicContentRender(
-                            picUrl = it.picUrl,
+                            picUrl = if (it.picUrl.startsWith("http://c.tieba.baidu.com/c/p/img")) Uri.parse(it.picUrl).getQueryParameter("src") ?: it.picUrl else it.picUrl,
                             originUrl = it.originSrc,
                             showOriginBtn = it.showOriginalBtn == 1,
                             originSize = it.originSize,

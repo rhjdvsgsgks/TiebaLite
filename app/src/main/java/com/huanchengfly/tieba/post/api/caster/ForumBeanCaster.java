@@ -143,9 +143,9 @@ public class ForumBeanCaster extends ICaster<ForumBean, ForumPageBean> {
             String origin = mediaBean.getBigPic();
             String fileName = URLUtil.guessFileName(origin, null, "image/jpeg");
             if (mediaBean.getBigPic().contains(".hiphotos.baidu.com") || mediaBean.getBigPic().contains("imgsrc.baidu.com")) {
-                origin = "http://imgsrc.baidu.com/forum/pic/item/" + fileName;
+                origin = "https://imgsrc.baidu.com/forum/pic/item/" + fileName;
             } else {
-                origin = "http://imgsa.baidu.com/forum/pic/item/" + fileName;
+                origin = "https://imgsa.baidu.com/forum/pic/item/" + fileName;
             }
             mediaInfoBean.setBigPic(mediaBean.getBigPic())
                     .setShowOriginalBtn(mediaBean.isGif() ? "0" : "1")

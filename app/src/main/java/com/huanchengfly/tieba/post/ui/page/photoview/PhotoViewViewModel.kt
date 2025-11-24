@@ -45,8 +45,8 @@ class PhotoViewViewModel :
             map {
                 PhotoViewItem(
                     picId = it.img.original.id,
-                    originUrl = it.img.original.originalSrc,
-                    url = if (it.showOriginalBtn) it.img.original.bigCdnSrc else null,
+                    originUrl = it.img.original.originalSrc.replace("http://", "https://"),
+                    url = if (it.showOriginalBtn) it.img.original.bigCdnSrc.replace("http://", "https://") else null,
                     overallIndex = it.overAllIndex.toInt(),
                     postId = it.postId?.toLongOrNull()
                 )
